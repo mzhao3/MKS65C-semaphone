@@ -1,0 +1,5 @@
+all:
+
+
+run:
+	./a.out
