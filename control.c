@@ -37,17 +37,21 @@ int main(int argc, char* argv[]) {
 
     printf("Created shared memory \n");
 
-    int sema;
-    sema = semget(key,1,IPC_CREAT | IPC_EXCL| 0644);
-    if(sema == -1){
+    int semd;
+    semd= semget(key,1,IPC_CREAT | IPC_EXCL| 0644);
+    if(semd== -1){
       printf("semaphore error\n");
+      semd = semget(key,1,0);
+      int v;
+      v = semctl(semd,0,GETVAL,0);
+      printf("semctl: %d \n",v);
     }
 
     else {
       union semun us;
-      us.val = 1;
+      us.val = 3;
       int r;
-      r =semctl(sema, 0, SETVAL, us);
+      r =semctl(semd, 0, SETVAL, us);
       printf("Created semaphore: %d \n",r);
     }
 
