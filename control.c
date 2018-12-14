@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
 
     shmctl(semd,0,IPC_RMID);
 
-    int file = open("file.txt", O_RDONLY);
+    int file = open("./file.txt", O_RDONLY);
     char readin[1000000];
     if(read(file,readin,1000000) < 0){
       printf("error viewing \n");
@@ -93,13 +93,13 @@ int main(int argc, char* argv[]) {
 
     //remove
     shmctl(shmid, IPC_RMID, NULL);
-    remove("file.txt");
+    remove("./file.txt");
 
   }
 
 
   else if(strcmp(args,"-v") == 0){
-    int file = open("file.txt", O_RDONLY);
+    int file = open("./file.txt", O_RDONLY);
 
     char readin[1000000];
     if(read(file,readin,1000000) < 0){
