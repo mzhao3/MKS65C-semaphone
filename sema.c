@@ -49,7 +49,7 @@ int main() {
    perror("reading story");
    return 1;
   }
-  printf("%s\n", story_text);
+  //printf("%s\n", story_text);
 
   if (strcmp(story_text, "") == 0) {
     printf("You have nothing here. Start your story!\n");
