@@ -11,14 +11,15 @@
 #include <unistd.h>
 
 //#define KEY 0xDEADBEEF
-
+// close shared memory por favor
+/**
 union semun {
-  int              val;    /* Value for SETVAL */
-  struct semid_ds *buf;    /* Buffer for IPC_STAT, IPC_SET */
-  unsigned short  *array;  /* Array for GETALL, SETALL */
-  struct seminfo  *__buf;  /* Buffer for IPC_INFO */
+  int              val;    / Value for SETVAL /
+  struct semid_ds *buf;    / Buffer for IPC_STAT, IPC_SET /
+  unsigned short  *array;  / Array for GETALL, SETALL /
+  struct seminfo  *__buf;  / Buffer for IPC_INFO /
 };
-
+**/
 int main(int argc, char* argv[]) {
   int key = 0xDEADBEEF;
 
@@ -29,7 +30,7 @@ int main(int argc, char* argv[]) {
     int shmid;
     char * data;
 
-    shmid = shmget(0,200,0644 | IPC_CREAT);
+    shmid = shmget(key,200,0644 | IPC_CREAT);
     data = shmat(shmid,(void *)0,0);
     if(data == (char*)(-1)){
       perror("shmat");
@@ -38,7 +39,7 @@ int main(int argc, char* argv[]) {
     printf("Created shared memory \n");
 
     int semd;
-    semd= semget(key,1,IPC_CREAT | IPC_EXCL| 0644);
+    semd= semget(key,1,IPC_CREAT | IPC_EXCL| 0777);
     if(semd== -1){
       printf("semaphore error\n");
       semd = semget(key,1,0);
